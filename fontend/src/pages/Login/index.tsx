@@ -1,9 +1,10 @@
 import { Button, Form, Input,notification,} from "antd";
 import { useNavigate } from "react-router-dom";
 import { setProfileToLS } from "../../utils";
-import { login } from "../../api/auth";
+
 import { TResError } from "../../interfaces/common.type";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { login } from "../../api/user";
 
 export function Login() {
   const navigate = useNavigate();

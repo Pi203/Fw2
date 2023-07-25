@@ -1,7 +1,7 @@
 
 import { TResSuccess } from "../interfaces/common.type";
 import {
-  TProduct,
+  IProduct,
   TQueryParamsProduct,
   TResListProductData,
 } from "../interfaces/product.type";
@@ -10,10 +10,10 @@ import instance from "./config";
 export const getProducts = (params: TQueryParamsProduct) =>
   instance.get<TResSuccess<TResListProductData>>("/products", { params });
 export const getProduct = (id: string) =>
-  instance.get<TResSuccess<TProduct>>(`/products/${id}`);
-export const createProduct = (data: TProduct) =>
-  instance.post<TResSuccess<TProduct>>("/products", data);
-export const updateProduct = (id: string, data: Omit<TProduct, "_id">) =>
-  instance.patch<TResSuccess<TProduct>>(`/products/${id}`, data);
+  instance.get<TResSuccess<IProduct>>(`/products/${id}`);
+export const createProduct = (data: IProduct) =>
+  instance.post<TResSuccess<IProduct>>("/products", data);
+export const updateProduct = (id: string, data: Omit<IProduct, "_id">) =>
+  instance.patch<TResSuccess<IProduct>>(`/products/${id}`, data);
 export const deleteProduct = (id: string) =>
-  instance.delete<TResSuccess<TProduct>>(`/products/${id}`);
+  instance.delete<TResSuccess<IProduct>>(`/products/${id}`);

@@ -88,14 +88,14 @@ export default function ProductsAdmin() {
               }}
               type="link"
             >
-              Edit
+             Sửa
             </Button>
             <Popconfirm
               placement="topRight"
               title="Are you sure?"
               onConfirm={() => handleDelete(record._id)}
             >
-              <Button type="link">Delete</Button>
+              <Button type="link">xóa</Button>
             </Popconfirm>
           </Space>
         );
@@ -105,15 +105,7 @@ export default function ProductsAdmin() {
     },
   ];
 
-  const handleChange = (pagination: any, filters: any, sorter: any) => {
-    const { current, pageSize } = pagination;
-    const { order, field } = sorter;
-    const _page = current;
-    const _limit = pageSize;
-    const _sort = field;
-    const _order = order === "ascend" ? EOrderBy.ASC : EOrderBy.DESC;
-    setParams({ ...params, _page, _limit, _sortBy: _sort, _orderBy: _order });
-  };
+
   console.log(params);
   return (
     <div>
@@ -125,22 +117,15 @@ export default function ProductsAdmin() {
               setProductEdit(null);
             }}
             style={{ marginBottom: 12 }}
-            type="primary"
+           
+            className=""
           >
-            Add+
+            thêm
           </Button>
         </Col>
       
       </Row>
       <Table
-        pagination={{
-          current: params._page || 1,
-          pageSize: params._limit,
-          total,
-        
-          
-        }}
-        onChange={handleChange}
         dataSource={products}
         columns={columns}
       />

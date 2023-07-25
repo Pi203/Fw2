@@ -3,16 +3,16 @@ import { useState, useEffect } from "react";
 
 import { getProducts } from "../../api/product";
 import { Link } from "react-router-dom";
-import { TProduct } from "../../interfaces/product.type";
+import { IProduct } from "../../interfaces/product.type";
 
 
 export default function Home() {
-  const [products, setProducts] = useState<TProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     const fetchAllProduct = async () => {
       const { data } = await getProducts({});
-      setProducts(data.data?.docs as TProduct[]);
+      setProducts(data.data?.docs as IProduct[]);
     };
     fetchAllProduct();
   }, []);
@@ -46,7 +46,7 @@ export default function Home() {
         ))
       ) : (
         <div style={{ width: "100%", textAlign: "center" }}>
-          <p>No products found</p>
+     
         </div>
       )}
     </div>

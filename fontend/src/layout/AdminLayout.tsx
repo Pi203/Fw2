@@ -80,9 +80,7 @@ export default function AdminLayout({
           >
             {children}
           </Content>
-          <Footer style={{ textAlign: "center" }}>
-          
-          </Footer>
+        
         </Layout>
       </Layout>
     </Layout>
