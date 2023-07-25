@@ -59,6 +59,7 @@ export default function MainLayout({
           )}
         </div>
       </header>
+    
       <main style={{ paddingTop: "40px", paddingBottom: "40px", backgroundColor: "#fff" }}>{children}</main>
       <footer>
         <h5>footer</h5>

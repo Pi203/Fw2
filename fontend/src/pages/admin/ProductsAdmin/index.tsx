@@ -1,26 +1,17 @@
-import {
-  Button,
-  Col,
-  Image,
-  Input,
-  Popconfirm,
-  Row,
-  Space,
-  Table,
-  notification,
+import {Button, Col,Image, Input, Popconfirm,Row,Space,Table,notification,
 } from "antd";
 import React, { useEffect } from "react";
 import { deleteProduct, getProducts } from "../../../api/product";
 import {
   EOrderBy,
   ESortBy,
-  TProduct,
+  IProduct,
   TQueryParamsProduct,
 } from "../../../interfaces/product.type";
 import { ColumnsType } from "antd/es/table";
 
 import CEModal from "./components/CEModal";
-import { TResError } from "../../../interfaces/common.type";
+
 
 const baseQueryParams = {
   _page: 1,
@@ -30,17 +21,17 @@ const baseQueryParams = {
 };
 
 export default function ProductsAdmin() {
-  const [products, setProducts] = React.useState<TProduct[]>([]);
+  const [products, setProducts] = React.useState<IProduct[]>([]);
   const [total, setTotal] = React.useState<number>(0);
   const [params, setParams] =
     React.useState<TQueryParamsProduct>(baseQueryParams);
   const [isOpenCEModal, setIsOpenCEModal] = React.useState(false);
-  const [productEdit, setProductEdit] = React.useState<TProduct | null>(null);
+  const [productEdit, setProductEdit] = React.useState<IProduct | null>(null);
 
   useEffect(() => {
     const fetchAllProduct = async () => {
       const { data } = await getProducts(params);
-      setProducts(data.data?.docs as TProduct[]);
+      setProducts(data.data?.docs as IProduct[]);
       setTotal(data.data?.totalDocs as number);
     };
     fetchAllProduct();
@@ -50,12 +41,12 @@ export default function ProductsAdmin() {
     try {
       const { data } = await deleteProduct(id);
       setProducts(products.filter((product) => product._id !== id));
-      notification.success({ message: data.message });
+      notification.success({ message: <data className="message">xóa thành công</data>  });
     } catch (error) {
-      notification.error({ message: (error as TResError).message });
+    
     }
   };
-  const columns: ColumnsType<TProduct> = [
+  const columns: ColumnsType<IProduct> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -76,15 +67,9 @@ export default function ProductsAdmin() {
       key: "description",
     },
     {
-      title: "CreatedAt",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      sorter: true,
-    },
-    {
       title: "Image",
       key: "image",
-      render(_: any, record: TProduct) {
+      render(_: any, record: IProduct) {
         return (
           <Image src={record.image} alt={record.name} width={120} height={60} />
         );
@@ -93,7 +78,7 @@ export default function ProductsAdmin() {
     {
       title: "Action",
       key: "action",
-      render(_: any, record: TProduct) {
+      render(_: any, record: IProduct) {
         return (
           <Space size={5}>
             <Button
@@ -145,24 +130,15 @@ export default function ProductsAdmin() {
             Add+
           </Button>
         </Col>
-        <Col>
-          <Input.Search
-            onSearch={(value) => {
-              setParams((prev) => ({ ...prev, _page: 1, _search: value }));
-            }}
-            name="search"
-            placeholder="Search"
-            allowClear
-          />
-        </Col>
+      
       </Row>
       <Table
         pagination={{
           current: params._page || 1,
           pageSize: params._limit,
           total,
-          showSizeChanger: true,
-          pageSizeOptions: ["4", "8", "12"],
+        
+          
         }}
         onChange={handleChange}
         dataSource={products}

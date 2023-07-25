@@ -2,15 +2,15 @@ import { Form, Input, Modal, Select, notification } from "antd";
 import React, { useEffect } from "react";
 
 import { createCategory, updateCategory } from "../../../../api/category";
-import { TCategory } from "../../../../interfaces/category.type";
+import { ICategory } from "../../../../interfaces/category.type";
 
 
 type IProps = {
-  categoryEdit?: TCategory | null;
-  setCategoryEdit: React.Dispatch<React.SetStateAction<TCategory | null>>;
+  categoryEdit?: ICategory | null;
+  setCategoryEdit: React.Dispatch<React.SetStateAction<ICategory | null>>;
   isOpenCEModal: boolean;
   setIsOpenCEModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setCategories: React.Dispatch<React.SetStateAction<TCategory[]>>;
+  setCategories: React.Dispatch<React.SetStateAction<ICategory[]>>;
 };
 export default function CEModal({
   isOpenCEModal,
@@ -50,36 +50,36 @@ export default function CEModal({
       (async () => {
         const { data } = await createCategory(values);
         setCategories((prev) => {
-          return [...prev, data.data as TCategory];
+          return [...prev, data.data as ICategory];
         });
-        notification.success({ message: data.message });
+        notification.success({ message: <data className="message">Xóa thành công</data> });
       })();
     }
     onClose();
   };
-
-  return (
-    <Modal
-      open={isOpenCEModal}
-      title="Create/Edit category"
-      onOk={() => form.submit()}
-      onCancel={onClose}
-      okText="Save"
-    >
-      <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
-          name="name"
-          label="Name"
-          rules={[
-            {
-              required: true,
-              message: "Name is required!",
-            },
-          ]}
-        >
-          <Input placeholder="Please type" />
-        </Form.Item>
-      </Form>
-    </Modal>
-  );
-}
+  
+    return (
+      <Modal
+        open={isOpenCEModal}
+        title="Create/Edit category"
+        onOk={() => form.submit()}
+        onCancel={onClose}
+        okText="Save"
+      >
+        <Form layout="vertical" form={form} onFinish={onFinish}>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[
+              {
+                required: true,
+                message: "Name is required!",
+              },
+            ]}
+          >
+            <Input placeholder="Please type" />
+          </Form.Item>
+        </Form>
+      </Modal>
+    );
+  }

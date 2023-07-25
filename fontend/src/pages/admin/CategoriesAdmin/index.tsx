@@ -1,22 +1,22 @@
 import { Button, Image, Popconfirm, Space, Table, notification } from "antd";
 import React, { useEffect } from "react";
 import { ColumnsType } from "antd/es/table";
-import { TResError } from "../../../interfaces/common.type";
+
 import CEModal from "./components/CEModal";
 import { deleteCategory, getCategories } from "../../../api/category";
-import { TCategory } from "../../../interfaces/category.type";
+import { ICategory } from "../../../interfaces/category.type";
 
 export default function CategoriesAdmin() {
-  const [categories, setCategories] = React.useState<TCategory[]>([]);
+  const [categories, setCategories] = React.useState<ICategory[]>([]);
   const [isOpenCEModal, setIsOpenCEModal] = React.useState(false);
-  const [categoryEdit, setCategoryEdit] = React.useState<TCategory | null>(
+  const [categoryEdit, setCategoryEdit] = React.useState<ICategory | null>(
     null
   );
 
   useEffect(() => {
     const fetchAllCategories = async () => {
       const { data } = await getCategories();
-      setCategories(data.data as TCategory[]);
+      setCategories(data.data as ICategory[]);
     };
     fetchAllCategories();
   }, []);
@@ -27,25 +27,19 @@ export default function CategoriesAdmin() {
       setCategories(categories.filter((category) => category._id !== id));
       notification.success({ message: data.message });
     } catch (error) {
-      notification.error({ message: (error as TResError).message });
+   
     }
   };
-  const columns: ColumnsType<TCategory> = [
+  const columns: ColumnsType<ICategory> = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
       fixed: "left",
     },
-    {
-      title: "CreatedAt",
-      dataIndex: "createdAt",
-      key: "createdAt",
-    },
-    {
-      title: "Action",
+    { title: "Action",
       key: "action",
-      render(_: any, record: TCategory) {
+      render(_: any, record: ICategory) {
         return (
           <Space size={5}>
             <Button
@@ -78,7 +72,7 @@ export default function CategoriesAdmin() {
           setIsOpenCEModal(true);
           setCategoryEdit(null);
         }}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 12 , }}
         type="primary"
       >
         Add+

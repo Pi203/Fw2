@@ -31,7 +31,7 @@ function getItem(
   } as MenuItem;
 }
 const items2: MenuProps["items"] = [
-  
+
   getItem(<Link to="/admin/products">Product</Link>, "2", <DesktopOutlined />),
   getItem(
     <Link to="/admin/categories">Category</Link>,
@@ -53,7 +53,7 @@ export default function AdminLayout({
       <Header style={{ display: "flex", alignItems: "center" }}>
       <Link to="/">
   <Title style={{ color: "#fff", margin: 0 }} level={3}>
-  
+
 
   <img src="https://i.ibb.co/rxdGcmY/zyro-image.png" alt="zyro-image" className="w-24" ></img>
   </Title>
@@ -81,7 +81,7 @@ export default function AdminLayout({
             {children}
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2023 Created by Ant UED
+          
           </Footer>
         </Layout>
       </Layout>

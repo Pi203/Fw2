@@ -1,4 +1,4 @@
-export type TProduct = {
+export type IProduct = {
   _id: string;
   name: string;
   price: number;
@@ -10,7 +10,7 @@ export type TProduct = {
 };
 
 export type TResListProductData = {
-  docs: TProduct[];
+  docs: IProduct[];
   totalDocs: number;
   limit: number;
   totalPages: number;
