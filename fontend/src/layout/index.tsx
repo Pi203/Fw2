@@ -3,6 +3,7 @@ import { Layout, Typography, Row, Col, Card, Space, Button } from "antd";
 import { Link } from "react-router-dom";
 import { clearLocalStorage, getProfileFromLS } from "../utils";
 import { User } from "../interfaces/auth.type";
+import HomeProduct from "../components/user/home";
 
 
 
