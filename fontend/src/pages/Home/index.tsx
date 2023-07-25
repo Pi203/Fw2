@@ -31,17 +31,28 @@ export default function Home() {
               overflow: "hidden",
             }}
           >
-            <Link to={`/products/${product._id}`}>
+         
+            <div className="product-item men">
+            <div className="product discount product_filter">
+                <div className="product_image">
+                <Link to={`/products/${product._id}`}>
               <img
                 style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                alt={product.name}
+            
                 src={product.image}
               />
             </Link>
-            <div style={{ padding: "8px" }}>
-              <h3 style={{ margin: 0 }}>{product.name}</h3>
-              <p style={{ margin: 0 }}>{product.price}</p>
+                </div>
+                <div className="favorite favorite_left"></div>
+                <div className="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"></div>
+                <div className="product_info">
+                    <h6 className="product_name"><a href="single.html">{product.name}</a></h6>
+                    <div className="product_price">{product.price}</div>
+                </div>
             </div>
+            <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+        </div>
+
           </div>
         ))
       ) : (
