@@ -23,7 +23,7 @@ export function Login() {
   };
 
   return (
-    <div className="">
+    <div className="mt-28">
       <Form
         style={{ width: 500, margin: '0 auto' }}
         name="normal_login"
@@ -54,7 +54,7 @@ export function Login() {
           <Button style={{ marginRight: 12, backgroundColor: 'red' }} type="primary" htmlType="submit" className="login-form-button">
             Sign in
           </Button>
-          Or <a style={{ marginLeft: 12 }} href="/signup">signup</a>
+          Or <a style={{ marginLeft: 12, backgroundColor: 'green', }} className="px-4 py-2 rounded-lg"  href="/signup"> Sign up</a>
         </Form.Item>
       </Form>
     </div>

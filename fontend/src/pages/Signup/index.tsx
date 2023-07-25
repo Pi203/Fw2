@@ -12,7 +12,7 @@ const SignupPage = () => {
         )
     };
     return (
-        <div className=''>
+        <div className='mt-28'>
             <Form style={{ width: 500, margin: '0 auto' }}
                 name="normal_login"
                 className="login-form"
@@ -49,23 +49,17 @@ const SignupPage = () => {
                     <Input
                         prefix={<LockOutlined className="site-form-item-icon" />}
                         type="password"
-                        placeholder="        
-"
+                        placeholder="confirmPassword"       
+
                     />
                 </Form.Item>
-                <Form.Item>
-                  
-
-                    <a className="login-form-forgot" href="">
-                        Forgot password
-                    </a>
-                </Form.Item>
+               
 
                 <Form.Item>
-                    <Button style={{marginRight:12, backgroundColor:'red'}} type="primary" htmlType="submit" className="login-form-button">
+                    <Button style={{marginRight:12, backgroundColor:'red'}} type="primary"  htmlType="submit" className="login-form-button">
                         Sign up
                     </Button>
-                    Or <a style={{marginLeft:12}} href="/signin">signin</a>
+                    Or <a style={{marginLeft:12 , backgroundColor:'green'}} className="px-4 py-2 rounded-lg" href="/signin">signin</a>
                 </Form.Item>
             </Form>
         </div>

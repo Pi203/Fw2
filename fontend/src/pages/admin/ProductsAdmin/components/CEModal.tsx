@@ -1,35 +1,37 @@
+import { useState, useEffect } from "react";
 import { Form, Input, Modal, Select, notification } from "antd";
-import React, { useEffect } from "react";
-
 import { getCategories } from "../../../../api/category";
-
 import { createProduct, updateProduct } from "../../../../api/product";
-import { TCategory } from "../../../../interfaces/category.type";
-import { TProduct } from "../../../../interfaces/product.type";
+import { IProduct } from "../../../../interfaces/product.type";
+import { ICategory } from "../../../../interfaces/category.type";
 
-type IProps = {
-  productEdit?: TProduct | null;
-  setProductEdit: React.Dispatch<React.SetStateAction<TProduct | null>>;
+import { message } from "antd/lib/index";
+type CEModalProps = {
   isOpenCEModal: boolean;
   setIsOpenCEModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setProducts: React.Dispatch<React.SetStateAction<TProduct[]>>;
+  productEdit: IProduct | null;
+  setProductEdit: React.Dispatch<React.SetStateAction<IProduct | null>>;
+  setProducts: React.Dispatch<React.SetStateAction<IProduct[]>>;
 };
+
 export default function CEModal({
   isOpenCEModal,
   setIsOpenCEModal,
-  setProductEdit,
   productEdit,
+  setProductEdit,
   setProducts,
-}: IProps) {
+}: CEModalProps) {
   const [form] = Form.useForm();
-  const [categories, setCategories] = React.useState<TCategory[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
   useEffect(() => {
     async function fetchAllCategories() {
       const { data } = await getCategories();
-      setCategories(data.data as TCategory[]);
+      setCategories(data.data as ICategory[]);
     }
     fetchAllCategories();
   }, []);
+
   useEffect(() => {
     form.setFieldsValue({
       name: productEdit?.name,
@@ -38,99 +40,73 @@ export default function CEModal({
       categoryId: productEdit?.categoryId,
       image: productEdit?.image,
     });
-  }, [productEdit]);
+  }, [form, productEdit]);
 
-  const onClose = () => {
+  const handleCloseModal = () => {
     form.resetFields();
     setProductEdit(null);
     setIsOpenCEModal(false);
   };
 
-  const onFinish = (values: any) => {
-    if (productEdit) {
-      (async () => {
-        const { data } = await updateProduct(productEdit._id, values);
-        setProducts((prev) => {
-          return prev.map((product) => {
-            if (product._id === productEdit._id) {
-              return { ...product, ...values };
-            }
-            return product;
-          });
-        });
-        notification.success({ message: data.message });
-      })();
-    } else {
-      (async () => {
-        const { data } = await createProduct(values);
-        setProducts((prev) => {
-          return [data.data as TProduct, ...prev];
-        });
-        notification.success({ message: data.message });
-      })();
+  const handleFormSubmit = async (values: any) => {
+    try {
+      let data;
+      if (productEdit) {
+        data = await updateProduct(productEdit._id, values);
+        setProducts((prev) =>
+          prev.map((product) =>
+            product._id === productEdit._id ? { ...product, ...values } : product
+          )
+        );
+      } else {
+        data = await createProduct(values);
+        setProducts((prev) => [data.data as IProduct, ...prev]);
+      }
+      notification.success({ message: <data className="message">Cập nhập thành công</data> });
+      handleCloseModal();
+    } catch (error) {
+
     }
-    onClose();
   };
 
   return (
     <Modal
-      open={isOpenCEModal}
-      title="Create/Edit incorporation type"
+      visible={isOpenCEModal}
+      title={productEdit ? "Edit product" : "Create product"}
+      onCancel={handleCloseModal}
       onOk={() => form.submit()}
-      onCancel={onClose}
-      okText="Save"
     >
-      <Form layout="vertical" form={form} onFinish={onFinish}>
+      <Form layout="vertical" form={form} onFinish={handleFormSubmit}>
         <Form.Item
           name="name"
           label="Name"
-          rules={[
-            {
-              required: true,
-              message: "name is required!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter product name" }]}
         >
-          <Input placeholder="Please type" />
+          <Input placeholder="Product name" />
         </Form.Item>
         <Form.Item
           name="price"
           label="Price"
-          rules={[
-            {
-              required: true,
-              message: "Price is required!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter product price" }]}
         >
-          <Input placeholder="Please type price" />
+          <Input placeholder="Product price" />
         </Form.Item>
         <Form.Item
           name="description"
           label="Description"
-          rules={[
-            {
-              required: true,
-              message: "Description is required!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter product description" }]}
         >
-          <Input placeholder="Please type description" />
+          <Input.TextArea placeholder="Product description" />
         </Form.Item>
         <Form.Item
           name="image"
           label="Image"
-          rules={[
-            {
-              required: true,
-              message: "Image is required!",
-            },
-          ]}
+          rules={[{ required: true, message: "Please enter product image URL" }]}
         >
-          <Input placeholder="Please type image link" />
+          <Input placeholder="Product image URL" />
         </Form.Item>
-        <Form.Item name="categoryId">
-          <Select placeholder="Select a category" optionFilterProp="children">
+        <Form.Item name="categoryId" label="Category">
+          <Select placeholder="Select a category">
             {categories.map((category) => (
               <Select.Option key={category._id} value={category._id}>
                 {category.name}

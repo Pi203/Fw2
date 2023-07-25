@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { deleteProduct } from "../../../api/product";
 import { ColumnsType } from "antd/es/table";
 
-import CEModal from "./components/CEModal";
+
 
 import { User } from "../../../interfaces/auth.type";
 import { getAllUser } from "../../../api/user";
@@ -40,24 +40,12 @@ export default function UsersAdmin() {
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Action",
-      key: "action",
 
-      fixed: "right",
-      width: 180,
-    },
   ];
   return (
     <div>
       <Table dataSource={users} columns={columns} />
-      <CEModal
-        isOpenCEModal={isOpenCEModal}
-        setIsOpenCEModal={setIsOpenCEModal}
-        setUserEdit={setUserEdit}
-        userEdit={userEdit}
-        setUsers={setUsers}
-      />
+     
     </div>
   );
 }
