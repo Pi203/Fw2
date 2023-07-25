@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getProducts } from "../../api/product";
 import { Link } from "react-router-dom";
 import { TProduct } from "../../interfaces/product.type";
+import HomeProduct from "../../components/user/home";
 
 
 export default function Home() {
@@ -34,7 +35,6 @@ export default function Home() {
             <Link to={`/products/${product._id}`}>
               <img
                 style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                alt={product.name}
                 src={product.image}
               />
             </Link>
@@ -46,9 +46,9 @@ export default function Home() {
         ))
       ) : (
         <div style={{ width: "100%", textAlign: "center" }}>
-          <p>No products found</p>
         </div>
       )}
+      <HomeProduct/>
     </div>
   );
 }
